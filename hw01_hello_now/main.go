@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+
+	//"log"
 	"time"
 
 	"github.com/beevik/ntp"
@@ -15,8 +17,8 @@ func main() {
 
 	fmt.Printf("current time: %v\n", current.Format(form))
 
-	fmt.Printf("exact time: %v", exact.Format(form))
+	fmt.Printf("exact time: %v\n", exact.Format(form))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("ERROR: %e", err)
 	}
 }
