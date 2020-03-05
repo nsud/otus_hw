@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	//"log"
 	"time"
 
 	"github.com/beevik/ntp"
@@ -15,10 +14,10 @@ func main() {
 	current := time.Now()
 	exact, err := ntp.Time("0.beevik-ntp.pool.ntp.org")
 
-	fmt.Printf("current time: %v\n", current.Format(form))
-
-	fmt.Printf("exact time: %v\n", exact.Format(form))
 	if err != nil {
 		log.Fatalf("ERROR: %e", err)
 	}
+
+	fmt.Printf("current time: %v\n", current.Format(form))
+	fmt.Printf("exact time: %v\n", exact.Format(form))
 }
