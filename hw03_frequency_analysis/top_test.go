@@ -43,6 +43,23 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
+var textOne = `добрый доктор доктор Айболит!
+	он под деревом сидит.
+	приходи к нему лечиться
+	И корова, и корова,
+	И корова, и червячок,
+	И медведица!
+	всех излечит, исцелит
+	добрый доктор Айболит!
+	пурум пум пум`
+
+var textTwo = `At Christmas the four March girls decide that they 
+	will all try hard to be good, and never to be cross, or lazy, 
+	or selfish again. Meg, the oldest, won't complain about her job 
+	or not having pretty dresses. Jo won't argue and get angry and 
+	run wild like a boy. Shy Beth will try hard to be braver, and 
+	little Amy will think less of herself and more of other people.`
+
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {
 		assert.Len(t, Top10(""), 0)
@@ -56,5 +73,13 @@ func TestTop10(t *testing.T) {
 			expected := []string{"он", "и", "а", "что", "ты", "не", "если", "-", "то", "Кристофер"}
 			assert.ElementsMatch(t, expected, Top10(text))
 		}
+	})
+	t.Run("My test", func(t *testing.T) {
+		expected := []string{"доктор", "И", "корова,", "Айболит!", "пум", "добрый", "и", "излечит,", "исцелит", "к"}
+		assert.Subset(t, expected, Top10(textOne))
+	})
+	t.Run("My next test", func(t *testing.T) {
+		expected := []string{"and", "to", "will", "or", "be", "try", "of", "the", "hard", "having"}
+		assert.Subset(t, expected, Top10(textTwo))
 	})
 }
