@@ -44,6 +44,7 @@ func (l *list) PushFront(v interface{}) *listItem { //в начало
 	}
 	l.first = newItm
 	l.count++
+	//fmt.Printf("PushFront: %v \t Next: %v \n", newItm.Value, newItm.Next)
 	return newItm
 }
 func (l *list) PushBack(v interface{}) *listItem { //в конец
@@ -59,6 +60,7 @@ func (l *list) PushBack(v interface{}) *listItem { //в конец
 	}
 	l.last = newItm
 	l.count++
+	//fmt.Printf("PushBack: %v \t Next: %v \n", newItm.Value, newItm.Prev)
 
 	return newItm
 }
