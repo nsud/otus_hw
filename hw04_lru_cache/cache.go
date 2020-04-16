@@ -1,6 +1,5 @@
 package hw04_lru_cache //nolint:golint,stylecheck
 import (
-	//"fmt"
 	"sync"
 )
 
@@ -8,19 +7,19 @@ type Key string
 
 type Cache interface {
 	Set(key Key, value interface{}) bool // Добавить значение в кэш по ключу
-	Get(key Key) (interface{}, bool) // Получить значение из кэша по ключу
-	Clear() // Очистить кэш
+	Get(key Key) (interface{}, bool)     // Получить значение из кэша по ключу
+	Clear()                              // Очистить кэш
 }
 
 type lruCache struct {
-	mx sync.Mutex
+	mx       sync.Mutex
 	capacity int
-	queue List
-	items map[Key]*listItem
+	queue    List
+	items    map[Key]*ListItem
 }
 
 type cacheItem struct {
-	key	Key
+	key   Key
 	value interface{}
 }
 
@@ -44,7 +43,6 @@ func (c *lruCache) Set(key Key, value interface{}) bool {
 			c.queue.Remove(lastEl)
 			//fmt.Printf("Set remove: %v \n", lastEl)
 
-			//delete(c.items, lastEl.Value.(cacheItem).key)
 		}
 		return false
 	}
@@ -75,11 +73,11 @@ func (c *lruCache) Clear() {
 }
 
 func NewCache(capacity int) Cache {
-	Cache := &lruCache{
+	cache := &lruCache{
 		capacity: capacity,
 		queue:    NewList(),
-		items:    make(map[Key]*listItem),
+		items:    make(map[Key]*ListItem),
 	}
 	//fmt.Println(Cache.items)
-	return Cache
+	return cache
 }
