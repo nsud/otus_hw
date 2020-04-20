@@ -56,7 +56,7 @@ func (c *lruCache) Clear() {
 	c.mx.Lock()
 	defer c.mx.Unlock()
 	c.queue = NewList()
-	for key, _ := range c.items {
+	for key := range c.items {
 		delete(c.items, key)
 	}
 }
