@@ -10,9 +10,7 @@ var ErrErrorsLimitExceeded = errors.New("errors limit exceeded")
 
 type Task func() error
 
-// Run starts tasks in N goroutines and stops its work when receiving M errors from tasks
 func Run(tasks []Task, n int, m int) error {
-	//fmt.Printf("%v gorutines\n %v errors \n",n, m)
 	if len(tasks) < 1 {
 		return errors.New("the task list is empty")
 	}
