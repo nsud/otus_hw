@@ -54,7 +54,7 @@ func TestCache(t *testing.T) {
 	})
 }
 
-func TestRemoveDict(t *testing.T) {
+func TestRemoveDict(t *testing.T)  {
 	c := NewCache(2)
 	addOne := c.Set("123", 321)
 	require.False(t, addOne)
