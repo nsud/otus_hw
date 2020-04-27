@@ -1,5 +1,6 @@
 package hw04_lru_cache //nolint:golint,stylecheck
 import (
+	//"fmt"
 	"sync"
 )
 
@@ -7,17 +8,17 @@ type Key string
 
 type Cache interface {
 	Set(key Key, value interface{}) bool // Добавить значение в кэш по ключу
-	Get(key Key) (interface{}, bool)     // Получить значение из кэша по ключу
-	Clear()                              // Очистить кэш
+	Get(key Key) (interface{}, bool) // Получить значение из кэша по ключу
+	Clear() // Очистить кэш
 }
 type lruCache struct {
-	mx       sync.Mutex
+	mx sync.Mutex
 	capacity int
-	queue    List
-	items    map[Key]*ListItem
+	queue List
+	items map[Key]*listItem
 }
 type cacheItem struct {
-	key   Key
+	key	Key
 	value interface{}
 }
 
@@ -31,6 +32,20 @@ func (c *lruCache) Set(key Key, value interface{}) bool {
 		val.Value = item.value
 		c.queue.MoveToFront(val)
 		return true
+<<<<<<< HEAD
+=======
+	} else {
+		c.queue.PushFront(value)
+		c.items[key] = c.queue.Front()
+		if c.queue.Len() > c.capacity {
+			lastEl := c.queue.Back()
+			c.queue.Remove(lastEl)
+			//fmt.Printf("Set remove: %v \n", lastEl)
+
+			//delete(c.items, lastEl.Value.(cacheItem).key)
+		}
+		return false
+>>>>>>> hw04 is done
 	}
 	c.queue.PushFront(value)
 	c.items[key] = c.queue.Front()
@@ -61,11 +76,11 @@ func (c *lruCache) Clear() {
 	}
 }
 func NewCache(capacity int) Cache {
-	cache := &lruCache{
+	Cache := &lruCache{
 		capacity: capacity,
 		queue:    NewList(),
-		items:    make(map[Key]*ListItem),
+		items:    make(map[Key]*listItem),
 	}
 	//fmt.Println(Cache.items)
-	return cache
+	return Cache
 }
