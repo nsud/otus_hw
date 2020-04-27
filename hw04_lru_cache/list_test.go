@@ -48,4 +48,15 @@ func TestList(t *testing.T) {
 		}
 		require.Equal(t, []int{50, 30, 10, 40, 60, 80, 70}, elems)
 	})
+	t.Run("word list", func(t *testing.T) {
+		l := NewList()
+		l.PushFront("hello")
+		l.PushBack("exhaustion")
+		l.PushBack("hello")
+		require.Equal(t, l.Len(), 3)
+		require.Equal(t, l.Front().Value, "hello")
+		l.Remove(l.Back())
+		require.Equal(t, l.Len(), 2)
+
+	})
 }
