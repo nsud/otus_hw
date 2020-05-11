@@ -18,7 +18,6 @@ func Copy(fromPath string, toPath string, offset, limit int64) error {
 	if err != nil {
 		return ErrUnsupportedFile
 	}
-	//defer file.Close()
 
 	stat, err := file.Stat()
 
@@ -42,18 +41,16 @@ func Copy(fromPath string, toPath string, offset, limit int64) error {
 	bar := pb.Full.Start64(limit)
 	barReader := bar.NewProxyReader(file)
 
-	//fileN := toPath + stat.Name()
 	newFile, err := os.Create(toPath)
 	if err != nil {
 		return err
 	}
-	//defer newFile.Close()
+
 	for {
-		_, err := io.CopyN(newFile, barReader, limit)
-		if err == io.EOF {
+		c, err := io.CopyN(newFile, barReader, limit)
+		if err == io.EOF || c == limit {
 			break
 		}
-		//return nil
 	}
 	//newFile.Chmod(0644)
 	bar.Finish()
