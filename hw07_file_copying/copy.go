@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"os"
 
@@ -33,8 +34,8 @@ func Copy(fromPath string, toPath string, offset, limit int64) error {
 		if err != nil {
 			return err
 		}
-		fallthrough
-	case limit == 0:
+	}
+	if limit == 0 {
 		limit = stat.Size() - offset
 	}
 
@@ -45,7 +46,7 @@ func Copy(fromPath string, toPath string, offset, limit int64) error {
 	if err != nil {
 		return err
 	}
-
+	fmt.Println(limit, offset)
 	for {
 		c, err := io.CopyN(newFile, barReader, limit)
 		if err == io.EOF || c == limit {

@@ -21,7 +21,7 @@ func TestCopy(t *testing.T) {
 	})
 	t.Run("Successful copying with limit and offset", func(t *testing.T) {
 		from = "./testdata/t.csv"
-		to = "copy.csv"
+		to = "/tmp/copy.csv"
 		limit = 50
 		offset = 10
 		Copy(from, to, offset, limit)
