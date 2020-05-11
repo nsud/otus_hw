@@ -53,9 +53,9 @@ func Copy(fromPath string, toPath string, offset, limit int64) error {
 		if err == io.EOF {
 			break
 		}
-		return nil
+		//return nil
 	}
-	newFile.Chmod(0644)
+	//newFile.Chmod(0644)
 	bar.Finish()
 
 	return nil

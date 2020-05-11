@@ -47,5 +47,6 @@ func TestCopy(t *testing.T) {
 		}
 		sizeNewFile := stDst.Size()
 		require.Less(t, sizeNewFile, sizeOldFile)
+		os.Remove(to)
 	})
 }
