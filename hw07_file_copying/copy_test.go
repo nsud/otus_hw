@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"github.com/stretchr/testify/require"
 	"os"
 	"testing"
@@ -12,15 +11,17 @@ func TestCopy(t *testing.T) {
 		offset = 1024
 		from = "./testdata/tesssst.txt"
 		res := Copy(from, to, offset, limit)
-		require.Equal(t, res, errors.New("offset exceeds file size"))
+		require.Equal(t, res, ErrOffsetExceedsFileSize)
 	})
 	t.Run("Unsupported file", func(t *testing.T) {
 		from = "/dev/urandom"
+		offset = 0
 		res := Copy(from, to, offset, limit)
-		require.Equal(t, res, errors.New("unsupported file"))
+		require.Equal(t, res, ErrUnsupportedFile)
 	})
 	t.Run("Successful copying with limit and offset", func(t *testing.T) {
 		from = "./testdata/t.csv"
+		to = "copy.csv"
 		limit = 50
 		offset = 10
 		Copy(from, to, offset, limit)
@@ -46,7 +47,8 @@ func TestCopy(t *testing.T) {
 			return
 		}
 		sizeNewFile := stDst.Size()
-		require.Less(t, sizeNewFile, sizeOldFile)
 		os.Remove(to)
+		require.Less(t, sizeNewFile, sizeOldFile)
+
 	})
 }

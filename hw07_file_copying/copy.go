@@ -2,9 +2,10 @@ package main
 
 import (
 	"errors"
-	"github.com/cheggaaa/pb/v3"
 	"io"
 	"os"
+
+	"github.com/cheggaaa/pb"
 )
 
 var (
@@ -15,10 +16,9 @@ var (
 func Copy(fromPath string, toPath string, offset, limit int64) error {
 	file, err := os.Open(fromPath)
 	if err != nil {
-		//os.Exit(1)
 		return ErrUnsupportedFile
 	}
-	defer file.Close()
+	//defer file.Close()
 
 	stat, err := file.Stat()
 
@@ -42,12 +42,12 @@ func Copy(fromPath string, toPath string, offset, limit int64) error {
 	bar := pb.Full.Start64(limit)
 	barReader := bar.NewProxyReader(file)
 
-	fileN := toPath + stat.Name()
-	newFile, err := os.Create(fileN)
+	//fileN := toPath + stat.Name()
+	newFile, err := os.Create(toPath)
 	if err != nil {
 		return err
 	}
-	defer newFile.Close()
+	//defer newFile.Close()
 	for {
 		_, err := io.CopyN(newFile, barReader, limit)
 		if err == io.EOF {
