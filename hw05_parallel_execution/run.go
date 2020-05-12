@@ -14,6 +14,7 @@ func Run(tasks []Task, n int, m int) error {
 	if len(tasks) < 1 {
 		return errors.New("the task list is empty")
 	}
+
 	if n == 0 || m > len(tasks) {
 		return ErrErrorsLimitExceeded
 	}
@@ -27,6 +28,7 @@ func Run(tasks []Task, n int, m int) error {
 
 		go func() {
 			defer wg.Done()
+
 			for task := range chanel {
 				if atomic.LoadInt32(&counter) > int32(m) {
 					continue
@@ -45,6 +47,7 @@ func Run(tasks []Task, n int, m int) error {
 
 	close(chanel)
 	wg.Wait()
+
 	if atomic.LoadInt32(&counter) > int32(m) {
 		return ErrErrorsLimitExceeded
 	}
