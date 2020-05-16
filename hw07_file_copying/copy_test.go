@@ -31,6 +31,33 @@ func TestCopy(t *testing.T) {
 			return
 		}
 		defer fileSrc.Close()
+
+		fileDst, err := os.Open(to)
+		if err != nil {
+			return
+		}
+		defer fileDst.Close()
+		stDst, err := fileDst.Stat()
+		if err != nil {
+			return
+		}
+		sizeNewFile := stDst.Size()
+		os.Remove(to)
+		require.Equal(t, sizeNewFile, limit)
+
+	})
+	t.Run("Limit+offset > filesize", func(t *testing.T) {
+		from = "./testdata/t.csv"
+		to = "/tmp/"
+		offset = 100
+		limit = 100500
+		Copy(from, to, offset, limit)
+
+		fileSrc, err := os.Open(from)
+		if err != nil {
+			return
+		}
+		defer fileSrc.Close()
 		stSrc, err := fileSrc.Stat()
 		if err != nil {
 			return
@@ -48,7 +75,6 @@ func TestCopy(t *testing.T) {
 		}
 		sizeNewFile := stDst.Size()
 		os.Remove(to)
-		require.Less(t, sizeNewFile, sizeOldFile)
-
+		require.Less(t, sizeNewFile, sizeOldFile-offset)
 	})
 }
