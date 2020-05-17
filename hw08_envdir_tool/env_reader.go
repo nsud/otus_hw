@@ -37,10 +37,16 @@ func ReadDir(dir string) (Environment, error) {
 			}
 			defer openFile.Close()
 			st, err := openFile.Stat()
+			if err != nil {
+				return nil, err
+				//fmt.Errorf("%v", err)
+			}
 			if st.Size() == 0 {
-				fmt.Printf("%v %v \n", errors.New("empty file: "), st.Name())
+				//fmt.Errorf("Empty file %v", st.Name())
+				emptF := errors.New("empty file")
 				//delete(resList, st.Name())
-				continue
+				return nil, emptF
+				//continue
 			}
 			openFile2, _ := ioutil.ReadFile(fullPathFile)
 			text := string(bytes.ReplaceAll(openFile2, []byte("0x00"), []byte("\n")))

@@ -16,7 +16,7 @@ func TestRunCmd(t *testing.T) {
 		require.Equal(t, two, 0)
 	})
 	t.Run("CMD + null env", func(t *testing.T) {
-		cmd := []string{"ipconfig"} //ifconfig
+		cmd := []string{"ifconfig"} //ifconfig
 		r := RunCmd(cmd, nil)
 		require.Equal(t, 1, r)
 	})
