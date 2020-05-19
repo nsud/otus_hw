@@ -20,8 +20,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	resp := RunCmd(commands, envDir)
+	/*resp := RunCmd(commands, envDir)
 	if resp != 0 {
 		log.Fatalf("Response code: %v", resp)
-	}
+	}*/
+	os.Exit(RunCmd(commands, envDir))
 }

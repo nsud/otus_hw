@@ -23,13 +23,12 @@ func TestReadDir(t *testing.T) {
 
 	})
 	t.Run("Default case", func(t *testing.T) {
-		f, err := ReadDir("./testdata/test/")
+		f, err := ReadDir("./testdata/env/")
 		if err != nil {
 			return
 		}
-		require.Equal(t, `"RTY"`, f["QWE"])
-		require.Equal(t, "purum", f["asd"])
-		require.Equal(t, "", f["Empty"])
+		require.Equal(t, "bar", f["BAR"])
+		require.Equal(t, "", f["UNSET"])
 	})
 
 }
