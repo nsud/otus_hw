@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -30,7 +29,7 @@ func ReadDir(dir string) (Environment, error) {
 			}
 			openFile, err := os.Open(fullPathFile)
 			if err != nil {
-				return nil, fmt.Errorf("error openning file: %v", err)
+				return nil, err
 			}
 			defer openFile.Close()
 
