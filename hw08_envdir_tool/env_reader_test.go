@@ -29,6 +29,8 @@ func TestReadDir(t *testing.T) {
 		}
 		require.Equal(t, "bar", f["BAR"])
 		require.Equal(t, "", f["UNSET"])
+		require.Equal(t, "   foo\nwith new line", f["FOO"])
+		require.Equal(t, `"hello"`, f["HELLO"])
 	})
 
 }

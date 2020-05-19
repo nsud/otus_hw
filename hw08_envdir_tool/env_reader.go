@@ -12,6 +12,7 @@ import (
 type Environment map[string]string
 
 var resList Environment
+var firstLine string
 
 func ReadDir(dir string) (Environment, error) {
 	files, err := ioutil.ReadDir(dir)
@@ -34,15 +35,15 @@ func ReadDir(dir string) (Environment, error) {
 			defer openFile.Close()
 
 			scanner := bufio.NewScanner(openFile)
+			if err := scanner.Err(); err != nil {
+				return nil, nil
+			}
 			for scanner.Scan() {
-				firstLine := scanner.Text()
-				text := string(bytes.ReplaceAll([]byte(firstLine), []byte("0x00"), []byte("\n")))
+				firstLine = scanner.Text()
+				text := string(bytes.ReplaceAll([]byte(firstLine), []byte("\x00"), []byte("\n")))
 				readyToList := strings.TrimRight(text, " \t\n")
 				resList[file.Name()] = readyToList
 				break
-			}
-			if err := scanner.Err(); err != nil {
-				return nil, nil
 			}
 		}
 	}
