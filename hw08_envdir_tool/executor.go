@@ -24,15 +24,15 @@ func RunCmd(cmd []string, env Environment) (returnCode int) {
 	if env != nil {
 		envs := make([]string, 0, len(env))
 		for k, v := range env {
-			val := k + "=" + v
-			envs = append(envs, val)
+			if len(v) != 0 {
+				val := k + "=" + v
+				envs = append(envs, val)
+			}
 		}
-
 		proc.Env = envs
 	}
 
 	if err := proc.Run(); err != nil {
-		//fmt.Println(err)
 		return codeFailure
 	}
 
