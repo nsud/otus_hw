@@ -16,23 +16,25 @@ func RunCmd(cmd []string, env Environment) (returnCode int) {
 	}
 
 	name, args := cmd[0], cmd[1:]
-	proc := exec.Command(name, args...)
-	proc.Stdin = os.Stdin
-	proc.Stdout = os.Stdout
-	proc.Stderr = os.Stderr
+	res := exec.Command(name, args...)
+	res.Stdin = os.Stdin
+	res.Stdout = os.Stdout
+	res.Stderr = os.Stderr
 
 	if env != nil {
 		envs := make([]string, 0, len(env))
 		for k, v := range env {
-			if len(v) != 0 {
-				val := k + "=" + v
-				envs = append(envs, val)
+			if v == "" {
+				os.Unsetenv(k)
+				return codeFailure
 			}
+			val := k + "=" + v
+			envs = append(envs, val)
 		}
-		proc.Env = envs
+		res.Env = envs
 	}
 
-	if err := proc.Run(); err != nil {
+	if err := res.Run(); err != nil {
 		return codeFailure
 	}
 
