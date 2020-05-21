@@ -26,10 +26,11 @@ func RunCmd(cmd []string, env Environment) (returnCode int) {
 		for k, v := range env {
 			if v == "" {
 				os.Unsetenv(k)
-				return codeFailure
+				//return codeFailure
+			} else {
+				val := k + "=" + v
+				envs = append(envs, val)
 			}
-			val := k + "=" + v
-			envs = append(envs, val)
 		}
 		res.Env = envs
 	}

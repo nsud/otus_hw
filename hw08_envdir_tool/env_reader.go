@@ -33,13 +33,13 @@ func ReadDir(dir string) (Environment, error) {
 				return nil, err
 			}
 			defer openFile.Close()
-			/*st, err := openFile.Stat()
+			st, err := openFile.Stat()
 			if st.Size() == 0 {
 				delete(resList, st.Name())
 			}
 			if err != nil {
 				return nil, err
-			}*/
+			}
 			scanner := bufio.NewScanner(openFile)
 			if err := scanner.Err(); err != nil {
 				return nil, nil
