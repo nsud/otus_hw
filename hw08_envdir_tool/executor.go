@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	codeSuccess = 1
-	codeFailure = 0
+	codeSuccess = 0
+	codeFailure = 1
 )
 
 func RunCmd(cmd []string, env Environment) (returnCode int) {
