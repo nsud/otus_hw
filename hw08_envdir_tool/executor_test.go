@@ -11,23 +11,23 @@ func TestRunCmd(t *testing.T) {
 		env := make(Environment)
 		env["ONE"] = "TWO"
 		one := RunCmd(cmd, env)
-		require.Equal(t, one, 0)
+		require.Equal(t, one, codeFailure)
 		two := RunCmd(nil, env)
-		require.Equal(t, two, 0)
+		require.Equal(t, two, codeFailure)
 	})
 	t.Run("CMD + null env", func(t *testing.T) {
 		cmd := []string{"ifconfig"} //ifconfig
 		r := RunCmd(cmd, nil)
-		require.Equal(t, 1, r)
+		require.Equal(t, codeSuccess, r)
 	})
 	t.Run("default case", func(t *testing.T) {
 		cmd := []string{}
 		env := make(Environment)
 		env["ONE"] = "TWO"
 		one := RunCmd(cmd, env)
-		require.Equal(t, one, 0)
+		require.Equal(t, one, codeFailure)
 		two := RunCmd(nil, env)
-		require.Equal(t, two, 0)
+		require.Equal(t, two, codeFailure)
 	})
 
 }
