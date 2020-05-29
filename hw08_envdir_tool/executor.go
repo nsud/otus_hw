@@ -1,7 +1,43 @@
 package main
 
-// RunCmd runs a command + arguments (cmd) with environment variables from env
+import (
+	"os"
+	"os/exec"
+)
+
+const (
+	codeSuccess = 0
+	codeFailure = 1
+)
+
 func RunCmd(cmd []string, env Environment) (returnCode int) {
-	// Place your code here
-	return
+	if len(cmd) == 0 {
+		return codeFailure
+	}
+
+	name, args := cmd[0], cmd[1:]
+	res := exec.Command(name, args...)
+	res.Stdin = os.Stdin
+	res.Stdout = os.Stdout
+	res.Stderr = os.Stderr
+
+	if env != nil {
+		envs := make([]string, 0, len(env))
+		for k, v := range env {
+			if v == "" {
+				os.Unsetenv(k)
+				//return codeFailure
+			} else {
+				val := k + "=" + v
+				envs = append(envs, val)
+			}
+		}
+		res.Env = envs
+	}
+
+	if err := res.Run(); err != nil {
+		return codeFailure
+	}
+
+	return codeSuccess
 }
